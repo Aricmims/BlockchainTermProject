@@ -1,75 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react'; 
 
-/**
- * App
- *
- * Simple react js fetch example
- */
-class App extends React.Component {
 
-  /**
-   * constructor
-   *
-   * @object  @props  parent props
-   * @object  @state  component state
-   */
-  constructor(props) {
+const App = () => {
+  const [gotData, setGotData] = useState(false);
 
-    super(props);
-
-    this.state = {
-      items: [],
-      isLoaded: false
-    }
-
-  }
-
-  /**
-   * componentDidMount
-   *
-   * Fetch json array of objects from given url and update state.
-   */
-  componentDidMount() {
-
-    fetch('http://api.espn.com/v1/sports/baseball/mlb/events')
-        .then(res => res.json())
-        .then(json => {
-          this.setState({
-            items: json,
-            isLoaded: true,
-          })
-        }).catch((err) => {
-      console.log(err);
-    });
-
-  }
-
-  /**
-   * render
-   *
-   * Render UI
-   */
-  render() {
-
-    const { isLoaded, items } = this.state;
-
-    if (!isLoaded)
-      return <div>Failed to load API</div>;
-
-    return (
-        <div className="App">
-          <ul>
-            {items.map(item => (
-                <li key={item.id}>
-                  Name: {item.name}
-                </li>
-            ))}
-          </ul>
-        </div>
-    );
-
-  }
-
+  return(
+    <div>
+      <button onClick={() => {
+        //make API request and set gotData accordingly
+        fetch("https://www.thesportsdb.com/api/v1/json/1/searchfilename.php?e=English_Premier_League_2015-04-26_Arsenal_vs_Chelsea")
+        .then(res => {
+          if(res.status >= 400){
+            throw new Error("Could not reach api endpoint. . .");
+          } else {
+            setGotData(true);
+            console.log("Sent Request");
+          }
+        })
+        .then(err => {
+          setGotData(false);
+        })
+      }}>this is a button</button>
+    </div>
+  )
 }
 
 export default App;
