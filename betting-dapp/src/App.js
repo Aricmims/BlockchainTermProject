@@ -5,7 +5,9 @@ const generate_game_buttons = (todaysGames) => {
   let gameButtons = [];
   for(let i = 0; i < todaysGames.length; i++){
     //TODO: pass in actual info on games
-    gameButtons.push(<GameButton label="foo" gameId="bar" />)
+    let awayTeam = todaysGames[i].teams.away.team.name;
+    let homeTeam = todaysGames[i].teams.home.team.name;
+    gameButtons.push(<GameButton home={homeTeam} away={awayTeam} gameId="bar" />)
   }
   return gameButtons;
 }
