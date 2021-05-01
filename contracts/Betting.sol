@@ -3,7 +3,7 @@ pragma solidity ^0.6.0;
 import "hardhat/console.sol";
 
 contract Betting {
-        address public owner;
+        address payable public owner;
         address payable[] public players;
         
         mapping (address => string) public openBets;
@@ -11,13 +11,14 @@ contract Betting {
         
         uint randNonce = 0;
         uint private modulus = 2;
-        uint amount = 20 ether;
+        uint betSize = 0.5 ether;
+        uint payoutSize = 1 ether;
 
         fallback() external payable {}
         
         receive() external payable {}
 
-        constructor() public {
+        constructor() public payable {
                 owner = msg.sender;
         }
 
@@ -26,7 +27,8 @@ contract Betting {
                 require(validBet(msg.sender));
                 openBets[msg.sender] = _teamSelected;
                 players.push(msg.sender);
-                address(this).transfer(1 ether);
+                address payable _owner = address(uint160(owner));
+                _owner.transfer(betSize);
         }
         
         function validBet(address payable _bettorAddress) view public returns (bool) {
@@ -38,20 +40,15 @@ contract Betting {
                 return true;
         }
         
-        function sendEther() public payable {
-            require(msg.sender == owner);
-            address(this).transfer(amount);
-        }
-        
-        function payWinners() public {
+        function payWinners() external payable {
                 require(msg.sender == owner);
-                uint payout = 2 ether;
                 for(uint i = 0; i < players.length; i++) {
                         randNonce++;
                         uint result = uint(keccak256(abi.encodePacked(now, players[i], randNonce))) % modulus;
                         if(result > 0) {
                                 console.log("You Won!");
-                                players[i].transfer(payout);
+                                //address payable _better = address(uint160(players[i]));
+                                //_better.transfer(payoutSize);
                                 betResults[players[i]].push('Winner');
                                 betResults[players[i]].push(openBets[players[i]]);
                         }
