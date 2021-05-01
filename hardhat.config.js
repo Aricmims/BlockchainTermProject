@@ -1,5 +1,12 @@
 require("@nomiclabs/hardhat-waffle");
 
+module.exports = {
+  solidity: "0.6.0",
+};
+
+/*
+require("@nomiclabs/hardhat-waffle");
+
 const INFURA_PROJECT_ID = "project id";
 const RINKEBY_PRIVATE_KEY = "metamask private key";
 
@@ -10,10 +17,6 @@ task("accounts", "Prints the list of accounts", async () => {
     console.log(account.address);
   }
 });
-
-/**
- * @type import('hardhat/config').HardhatUserConfig
- */
 
 module.exports = {
   paths: {
@@ -28,3 +31,4 @@ module.exports = {
     }
   }
 };
+*/
