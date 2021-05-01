@@ -1,14 +1,7 @@
 require("@nomiclabs/hardhat-waffle");
 
-module.exports = {
-  solidity: "0.6.0",
-};
-
-/*
-require("@nomiclabs/hardhat-waffle");
-
-const INFURA_PROJECT_ID = "project id";
-const RINKEBY_PRIVATE_KEY = "metamask private key";
+const INFURA_PROJECT_ID = "c7ce7a5669d84a85baadeef6745d1c10";
+const RINKEBY_PRIVATE_KEY = "26168d4f7468677103739364964828a4921972097536a491e4539ff7813cc2ca";
 
 task("accounts", "Prints the list of accounts", async () => {
   const accounts = await ethers.getSigners();
@@ -21,7 +14,7 @@ task("accounts", "Prints the list of accounts", async () => {
 module.exports = {
   paths: {
     sources: "./contract_ABI",
-    artifacts: "./artifacts"
+    artifacts: "./src/artifacts"
   },
   solidity: "0.6.0",
   networks: {
@@ -31,4 +24,4 @@ module.exports = {
     }
   }
 };
-*/
+
