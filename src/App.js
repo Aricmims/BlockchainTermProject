@@ -4,9 +4,7 @@ import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 const ethers = require('ethers');
-
 const BettingJSON = require('./artifacts/contracts/Betting.sol/Betting.json');
-
 
 const App = props => {
   
@@ -15,11 +13,11 @@ const App = props => {
   const [gameButtons, setGameButtons] = useState([]);
   const [betInstance, setBetInstance] = useState(null);
 
+  //initialize the bet instance=
   const init = () => {
     let provider;
     window.ethereum.enable().then(provider = new ethers.providers.Web3Provider(window.ethereum));
 
-  
     // initialize shadow Betting contract
     let BetInstance = null;
 
@@ -31,6 +29,16 @@ const App = props => {
     return BetInstance;
   };
 
+  const generate_game_buttons = (todaysGames) => {
+    let gameButtons = [];
+    for(let i = 0; i < todaysGames.length; i++){
+      //TODO: pass in actual info on games
+      let awayTeam = todaysGames[i].teams.away.team.name;
+      let homeTeam = todaysGames[i].teams.home.team.name;
+      gameButtons.push(<GameButton betIn={betInstance} home={homeTeam} away={awayTeam} gameId="bar" />)
+    }
+    return gameButtons;
+  }
 
   //populate the matches for the day on startup
   useEffect(()=>{
@@ -56,18 +64,6 @@ const App = props => {
     }
   }, [todaysGames])
 
-  const generate_game_buttons = (todaysGames) => {
-    let gameButtons = [];
-    for(let i = 0; i < todaysGames.length; i++){
-      //TODO: pass in actual info on games
-      let awayTeam = todaysGames[i].teams.away.team.name;
-      let homeTeam = todaysGames[i].teams.home.team.name;
-      gameButtons.push(<GameButton home={homeTeam} away={awayTeam} gameId="bar" />)
-    }
-    return gameButtons;
-  }
-
-
   return(
     <Grid container>
       <Grid container justify="center" spacing={2}>
@@ -85,7 +81,6 @@ const App = props => {
           ))}
       </Grid>
     </Grid>
-
   )
 }
 

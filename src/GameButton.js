@@ -45,10 +45,14 @@ const GameButton = props => {
                     </Typography> 
                 </Grid>
                 <Grid item xs={6}>
-                    <MyButton>{props.home}</MyButton>
+                    <MyButton onClick={() => {
+                        let betInstance = props.betIn;
+                    }}>{props.home}</MyButton>
                 </Grid>
                 <Grid item xs={6}>
-                    <MyButton>{props.away}</MyButton>
+                    <MyButton onClick={() => {
+                        let betInstance = props.betIn;
+                    }}>{props.away}</MyButton>
                 </Grid>
             </Grid>
         </ModalBackground>
