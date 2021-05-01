@@ -1,21 +1,27 @@
 import React, { useEffect, useState } from 'react'; 
 import GameButton from "./GameButton";
+import Typography from '@material-ui/core/Typography';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
 
-const generate_game_buttons = (todaysGames) => {
-  let gameButtons = [];
-  for(let i = 0; i < todaysGames.length; i++){
-    //TODO: pass in actual info on games
-    let awayTeam = todaysGames[i].teams.away.team.name;
-    let homeTeam = todaysGames[i].teams.home.team.name;
-    gameButtons.push(<GameButton home={homeTeam} away={awayTeam} gameId="bar" />)
-  }
-  return gameButtons;
-}
 
-const App = () => {
+const App = props => {
   const [gotData, setGotData] = useState(false);
   const [todaysGames, setTodaysGames] = useState([]);
   const [gameButtons, setGameButtons] = useState([]);
+
+
+  const generate_game_buttons = (todaysGames) => {
+    let gameButtons = [];
+    for(let i = 0; i < todaysGames.length; i++){
+      //TODO: pass in actual info on games
+      let awayTeam = todaysGames[i].teams.away.team.name;
+      let homeTeam = todaysGames[i].teams.home.team.name;
+      gameButtons.push(<GameButton home={homeTeam} away={awayTeam} gameId="bar" />)
+    }
+    return gameButtons;
+  }
+  
 
   //populate the matches for the day on startup
   useEffect(()=>{
@@ -41,17 +47,24 @@ const App = () => {
     }
   }, [todaysGames])
 
-
-  
   return(
-    //TODO: generate buttons for each game acquired in the initial request
-    <div>
-      <ul className="list-group">
-        {gameButtons.length > 0 && gameButtons[0].map((button) => (
-          <li>{button}</li>
-        ))}
-      </ul>
-    </div>
+    <Grid container>
+      <Grid container justify="center" spacing={2}>
+        <Grid item xs={12}>
+          <Typography variant="h1" component="h1">
+            <Box textAlign="center">
+              Place a Bet
+            </Box>
+          </Typography>
+        </Grid>
+          {gameButtons.length > 0 && gameButtons[0].map((button) => (
+            <Grid item xs={3}>
+              {button}  
+            </Grid>
+          ))}
+      </Grid>
+    </Grid>
+
   )
 }
 
