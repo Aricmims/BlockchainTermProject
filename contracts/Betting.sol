@@ -6,7 +6,7 @@ contract Betting {
         address payable public owner;
         address payable[] public players;
         
-        mapping (address => string) public openBets;
+        mapping (address => bytes32) public openBets;
         mapping (address => string[]) public betResults;
         
         uint randNonce = 0;
@@ -14,15 +14,15 @@ contract Betting {
         uint betSize = 0.5 ether;
         uint payoutSize = 1 ether;
 
-        fallback() external payable {}
+        // function fallback() external payable {}
         
-        receive() external payable {}
+        function receive() external payable {}
 
         constructor() public payable {
                 owner = msg.sender;
         }
 
-         function bet(string memory _teamSelected) public payable {
+         function bet(bytes32 _teamSelected) external payable {
                 require(msg.sender != owner);
                 require(validBet(msg.sender));
                 openBets[msg.sender] = _teamSelected;
